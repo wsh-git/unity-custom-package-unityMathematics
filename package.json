@@ -1,0 +1,20 @@
+{
+  "name": "com.wshunity.mathematics",
+  "displayName": "Wsh Unity Mathematics",
+  "version": "0.0.1",
+  "unity": "2017.2",
+  "keywords": [
+    "Mathematics"
+  ],
+  "description": "This is a very simple mathematics system.",
+  "repository": {
+    "url": "https://github.com/wsh-git/unity-custom-package-unityMathematics.git",
+    "type": "git",
+    "revision": ""
+  },
+  "author": {
+    "name": "wshunity",
+    "email": "",
+    "url": ""
+  }
+}
