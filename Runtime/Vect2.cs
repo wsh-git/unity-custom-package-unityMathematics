@@ -1,4 +1,4 @@
-namespace Wsh.Mathematics {
+﻿namespace Wsh.Mathematics {
     
     public class Vect2 {
         
@@ -18,7 +18,7 @@ namespace Wsh.Mathematics {
             }
         }
         
-        // ������ƽ������
+        // 向量的平方长度
         public float SqrMagnitude {
             get {
                 return X * X + Y * Y;
@@ -47,6 +47,14 @@ namespace Wsh.Mathematics {
 
         public void Set(float x, float y) {
             m_x = x;
+            m_y = y;
+        }
+
+        public void SetX(float x) {
+            m_x = x;
+        }
+
+        public void SetY(float y) {
             m_y = y;
         }
 
@@ -82,6 +90,10 @@ namespace Wsh.Mathematics {
             Set(this.X / v, this.Y / v);
         }
 
+        public void Abs() {
+            Set(MathCalculator.Abs(this.X), MathCalculator.Abs(this.Y));
+        }
+        
         public void Normalize() {
             float num = Magnitude;
             if(num > 1E-05f) {
@@ -89,6 +101,44 @@ namespace Wsh.Mathematics {
             } else {
                 Set(0);
             }
+        }
+
+        /// <summary>
+        /// 当前向量按照 角度 degree 进行旋转
+        /// </summary>
+        /// <param name="degree">角度（注意：这里不是弧度）</param>
+        public void Rotate(float degree) {
+            float radian = MathCalculator.DegreeToRadian(degree);
+            float sin = MathCalculator.Sin(radian);
+            float cos = MathCalculator.Cos(radian);
+            float newX = X * cos - Y * sin;
+            float newY = Y * cos + X * sin;
+            Set(newX, newY);
+        }
+        
+        public static float Dot(Vect2 vect1, Vect2 vect2) {
+            return vect1.X * vect2.X + vect1.Y * vect2.Y;
+        }
+
+        /// <summary>
+        /// 计算从向量1到向量2的角度
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns> 注意：这里返回的是角度，不是弧度 </returns>
+        public static float Angle(Vect2 from, Vect2 to) {
+            float num = MathCalculator.Sqrt(from.SqrMagnitude * to.SqrMagnitude);
+            if(num < 1E-15f) {
+                return 0f;
+            }
+            float num2 = MathCalculator.Clamp(Dot(from, to)/num, -1f, 1f);
+            return MathCalculator.RadianToDegree(MathCalculator.Acos(num2));
+        }
+
+        public static float SignedAngle(Vect2 from, Vect2 to) {
+            float num1 = Angle(from, to);
+            float num2 = MathCalculator.Sign(from.X * to.Y - from.Y * to.X);
+            return num1 * num2;
         }
 
         public static Vect2 operator +(Vect2 a, Vect2 b) {

@@ -19,11 +19,19 @@ namespace Wsh.Mathematics {
         // 负无穷大的数
         public const float NEGATIVE_INFINITY = float.NegativeInfinity;
 
-        // 角度到弧度的转换常数
+        // 角度到弧度的转换常数 0.017453292
         public const float DEGREE_TO_RADIAN = PI / FLAT_ANGLE_DEGREE;
 
-        // 弧度到角度的转换常数
+        // 弧度到角度的转换常数 57.29578
         public const float RADIAN_TO_DEGREE = FLAT_ANGLE_DEGREE / PI;
+
+        public static float DegreeToRadian(float degree) {
+            return degree * DEGREE_TO_RADIAN;
+        }
+
+        public static float RadianToDegree(float radian) {
+            return radian * RADIAN_TO_DEGREE;
+        }
 
         // 三角函数 正弦值, 输入的是弧度
         public static float Sin(float radian) {
@@ -236,12 +244,16 @@ namespace Wsh.Mathematics {
         }
 
         // 四舍五入的算法
-        public static float Round(float f) {
-            return (float)Math.Round(f);
+        public static float Round(float v) {
+            return (float)Math.Round(v);
         }
 
-        public static int RoundToInt(float f) {
-            return (int)Math.Round(f);
+        public static int RoundToInt(float v) {
+            return (int)Math.Round(v);
+        }
+
+        public static float Sign(float v) {
+            return (float)Math.Sign(v);
         }
 
         // value 的取值在 min max之间，超出这个边界会返回对应边界的值

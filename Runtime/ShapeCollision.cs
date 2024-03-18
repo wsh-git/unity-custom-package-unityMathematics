@@ -1,46 +1,19 @@
-﻿using UnityEngine;
-
-namespace Wsh.Mathematics {
+﻿namespace Wsh.Mathematics {
 
     public static class ShapeCollision {
 
-        private static Vector2 m_vectTemp01;
-        private static Vector2 m_vectTemp02;
-        private static Vector2 m_vectTemp03;
-        private static Vector2 m_vectTemp04;
-        private static Vector2 m_vectTemp05;
+        private static Vect2 m_vectTemp01;
+        private static Vect2 m_vectTemp02;
+        private static Vect2 m_vectTemp03;
+        private static Vect2 m_vectTemp04;
+        private static Vect2 m_vectTemp05;
 
         static ShapeCollision() {
-            m_vectTemp01 = new Vector2(0, 0);
-            m_vectTemp02 = new Vector2(0, 0);
-            m_vectTemp03 = new Vector2(0, 0);
-            m_vectTemp04 = new Vector2(0, 0);
-            m_vectTemp05 = new Vector2(0, 0);
-        }
-
-        private static float Dot(Vector2 vector1, Vector2 vector2) {
-            return vector1.x * vector2.x + vector1.y * vector2.y;
-        }
-
-        private static void Abs(this Vector2 vector) {
-            vector.x = Mathf.Abs(vector.x);
-            vector.y = Mathf.Abs(vector.y);
-        }
-
-        private static void Rotate(this Vector2 vector, float angle) {
-            float radian = DegreeToRadian(angle);
-            float sin = Mathf.Sin(radian);
-            float cos = Mathf.Cos(radian);
-            vector.x = vector.x * cos - vector.y * sin;
-            vector.y = vector.y * cos + vector.x * sin;
-        }
-
-        private static float DegreeToRadian(float angle) {
-            return angle * Mathf.Deg2Rad;
-        }
-
-        private static float RadianToDegree(float radian) {
-            return radian * Mathf.Rad2Deg;
+            m_vectTemp01 = new Vect2();
+            m_vectTemp02 = new Vect2();
+            m_vectTemp03 = new Vect2();
+            m_vectTemp04 = new Vect2();
+            m_vectTemp05 = new Vect2();
         }
 
         /// <summary>
@@ -50,8 +23,8 @@ namespace Wsh.Mathematics {
         /// <param name="circleCenter"> 圆心的坐标 </param>
         /// <param name="circleRadius"> 圆的半径 </param>
         /// <returns></returns>
-        public static bool IsPointInCircle(Vector2 point, Vector2 circleCenter, float circleRadius) {
-            return Vector2.SqrMagnitude(point - circleCenter) <= circleRadius * circleRadius;
+        public static bool IsPointInCircle(Vect2 point, Vect2 circleCenter, float circleRadius) {
+            return (point - circleCenter).SqrMagnitude <= circleRadius * circleRadius;
         }
 
         /// <summary>
@@ -62,9 +35,9 @@ namespace Wsh.Mathematics {
         /// <param name="circleCenter02"> 圆2的圆心 </param>
         /// <param name="circleRadius02"> 圆2的半径 </param>
         /// <returns></returns>
-        public static bool ISCirclesIntersect(Vector2 circleCenter01, float circleRadius01, Vector2 circleCenter02, float circleRadius02) {
+        public static bool ISCirclesIntersect(Vect2 circleCenter01, float circleRadius01, Vect2 circleCenter02, float circleRadius02) {
             float sum = circleRadius01 + circleRadius02;
-            return Vector2.SqrMagnitude(circleCenter01 - circleCenter02) <= sum * sum;
+            return (circleCenter01 - circleCenter02).SqrMagnitude <= sum * sum;
         }
 
         /// <summary>
@@ -76,29 +49,28 @@ namespace Wsh.Mathematics {
         /// <param name="circleCenter"> 圆心坐标 </param>
         /// <param name="circleRadius"> 圆的半径 </param>
         /// <returns></returns>
-        public static bool IsAABBCircleIntersect(Vector2 rectCenter, float rectWidth, float rectHeight, Vector2 circleCenter, float circleRadius) {
+        public static bool IsAABBCircleIntersect(Vect2 rectCenter, float rectWidth, float rectHeight, Vect2 circleCenter, float circleRadius) {
             m_vectTemp01 = rectCenter - circleCenter;
             m_vectTemp01.Abs();
             m_vectTemp02.Set(rectWidth, rectHeight);
-            m_vectTemp02 = m_vectTemp02 / 2f;
+            m_vectTemp02.Div(2f);
             m_vectTemp03 = m_vectTemp01 - m_vectTemp02;
-            if(m_vectTemp03.x < 0) {
-                m_vectTemp03.x = 0;
+            if(m_vectTemp03.X < 0) {
+                m_vectTemp03.SetX(0);
             }
-            if(m_vectTemp03.y < 0) {
-                m_vectTemp03.y = 0;
+            if(m_vectTemp03.Y < 0) {
+                m_vectTemp03.SetY(0);
             }
-            return Dot(m_vectTemp03, m_vectTemp03) <= circleRadius * circleRadius;
+            return Vect2.Dot(m_vectTemp03, m_vectTemp03) <= circleRadius * circleRadius;
         }
 
-        public static bool IsRectCircleIntersect(Vector2 rectCenter, Vector2 rectDir, float rectWidth, float rectHeight, Vector2 circleCenter, float circleRadius) {
+        public static bool IsRectCircleIntersect(Vect2 rectCenter, Vect2 rectDir, float rectWidth, float rectHeight, Vect2 circleCenter, float circleRadius) {
             m_vectTemp01.Set(0, 1);
-            float rectRotation = Vector2.SignedAngle(m_vectTemp01, rectDir);
+            float rectRotation = Vect2.SignedAngle(m_vectTemp01, rectDir);
             m_vectTemp02 = circleCenter - rectCenter;
             m_vectTemp02.Rotate(-rectRotation);
-            circleCenter.Set(m_vectTemp02.x, m_vectTemp02.y);
-            rectCenter.Set(0, 0);
-            return IsAABBCircleIntersect(rectCenter, rectWidth, rectHeight, circleCenter, circleRadius);
+            m_vectTemp03.Set(0, 0);
+            return IsAABBCircleIntersect(m_vectTemp03, rectWidth, rectHeight, m_vectTemp02, circleRadius);
         }
 
     }

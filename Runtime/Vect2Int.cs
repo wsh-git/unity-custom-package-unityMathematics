@@ -1,4 +1,4 @@
-namespace Wsh.Mathematics {
+ï»¿namespace Wsh.Mathematics {
     
     public class Vect2Int {
         
@@ -18,7 +18,7 @@ namespace Wsh.Mathematics {
             }
         }
         
-        // ÏòÁ¿µÄÆ½·½³¤¶È
+        // å‘é‡çš„å¹³æ–¹é•¿åº¦
         public int SqrMagnitude {
             get {
                 return X * X + Y * Y;
