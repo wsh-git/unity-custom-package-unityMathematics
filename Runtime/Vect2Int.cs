@@ -32,6 +32,10 @@
 
         }
 
+        public Vect2Int(Vect2Int vect2Int) : this(vect2Int.X, vect2Int.Y) {
+
+        }
+
         public Vect2Int(int x, int y) {
             m_x = x;
             m_y = y;
@@ -61,6 +65,15 @@
         public void Mul(int v) {
             Set(this.X * v, this.Y * v);
         }
+
+        public bool IsEqual(Vect2Int vect2Int) {
+            return IsEqual(vect2Int.X, vect2Int.Y);
+        }
+
+        public bool IsEqual(int x, int y) {
+            return this.X == x && this.Y == y;
+        }
+
 
         public Vect2 Div(float v) {
             return new Vect2(this.X / v, this.Y / v);
