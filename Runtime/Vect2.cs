@@ -116,6 +116,12 @@
             Set(newX, newY);
         }
         
+        public static float SqrDistance(Vect2 vect1, Vect2 vect2) {
+            float x = vect1.X - vect2.X;
+            float y = vect1.Y - vect2.Y;
+            return x * x + y * y;
+        }
+        
         public static float Dot(Vect2 vect1, Vect2 vect2) {
             return vect1.X * vect2.X + vect1.Y * vect2.Y;
         }
