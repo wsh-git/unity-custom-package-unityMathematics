@@ -66,6 +66,10 @@
             Set(v, v);
         }
 
+        public override string ToString() {
+            return $"({X}, {Y})";
+        }
+
         public void Add(Vect2 vect) {
             Set(this.X + vect.X, this.Y + vect.Y);
         }

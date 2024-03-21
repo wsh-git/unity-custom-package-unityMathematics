@@ -50,6 +50,10 @@
             Set(vect.X, vect.Y);
         }
 
+        public override string ToString() {
+            return $"({X}, {Y})";
+        }
+
         public void Add(Vect2Int vect) {
             Set(this.X + vect.X, this.Y + vect.Y);
         }
