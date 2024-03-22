@@ -73,5 +73,9 @@
             return IsAABBCircleIntersect(m_vectTemp03, rectWidth, rectHeight, m_vectTemp02, circleRadius);
         }
 
+        public static bool IsRectsIntersect(Vect2 rectCenter01, float rectWidth01, float rectHeight01, Vect2 rectCenter02, float rectWidth02, float rectHeight02) {
+            return (MathCalculator.Abs(rectCenter01.X - rectCenter02.X) <= (rectWidth01 + rectWidth02) * 0.5f) && (MathCalculator.Abs(rectCenter01.Y - rectCenter02.Y) <= (rectHeight01 + rectHeight02) * 0.5f);
+        }
+
     }
 }
