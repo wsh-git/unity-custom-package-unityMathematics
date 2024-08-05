@@ -66,6 +66,10 @@
             Set(v, v);
         }
 
+        public Vect2 Copy() {
+            return new Vect2(X, Y);
+        }
+
         public override string ToString() {
             return $"({X}, {Y})";
         }

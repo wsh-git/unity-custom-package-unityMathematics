@@ -13,6 +13,9 @@ namespace Wsh.Mathematics {
         // 平角的大小
         public const float FLAT_ANGLE_DEGREE = 180f;
 
+        // 周角的大小
+        public const float FULL_ANGLE_DEGREE = FLAT_ANGLE_DEGREE * 2;
+
         // 正无穷大的数
         public const float POSITIVE_INFINITY = float.PositiveInfinity;
 

@@ -1,4 +1,6 @@
-﻿namespace Wsh.Mathematics {
+﻿using System;
+
+namespace Wsh.Mathematics {
 
     public static class ShapeCollision {
 
@@ -37,7 +39,20 @@
         /// <returns></returns>
         public static bool ISCirclesIntersect(Vect2 circleCenter01, float circleRadius01, Vect2 circleCenter02, float circleRadius02) {
             float sum = circleRadius01 + circleRadius02;
-            return (circleCenter01 - circleCenter02).SqrMagnitude <= sum * sum;
+            float a = Math.Abs(circleCenter01.X - circleCenter02.X);
+            float b = Math.Abs(circleCenter01.Y - circleCenter02.Y);
+            if(a >= sum) {
+                return false;
+            }
+            if(b >= sum) {
+                return false;
+            }
+            float d = Math.Abs(circleRadius01 - circleRadius02);
+            if (a+b<=d) { // 判断是否大圆包小圆
+                return true;
+            }
+            return (a*a + b*b) <= sum * sum;
+            // return (circleCenter01 - circleCenter02).SqrMagnitude <= sum * sum;
         }
 
         /// <summary>
